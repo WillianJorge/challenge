@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\UserServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -36,6 +37,35 @@ class UserController extends Controller
         }
 
     }
+
+    public function show(Request $request)
+    {
+
+        try {
+
+            if ($request->query()) {
+                [$key, $value] = Arr::divide($request->query());
+
+
+                $users = $this->services->findByField(head($key),head($value));
+                if (request()->wantsJson()) {
+
+                    return response()->json([
+                        'data' => $users,
+                    ]);
+                }
+            }
+
+        } catch (\Throwable $th) {
+            if (request()->wantsJson()) {
+                return response()->json([
+                    'error'   => true,
+                    'message' => $th->getMessage()
+                ]);
+            }
+        }
+    }
+
 
     public function store(Request $request)
     {
@@ -89,27 +119,27 @@ class UserController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        try {
+    // public function show(Request $request)
+    // {
+    //     try {
 
-            $user = $this->services->find($id);
+    //         $user = $this->services->find($id);
 
-            if (request()->wantsJson()) {
+    //         if (request()->wantsJson()) {
 
-                return response()->json([
-                    'data' => $user,
-                ]);
-            }
-        } catch (\Throwable $th) {
-            if (request()->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $th->getMessage()
-                ]);
-            }
-        }
-    }
+    //             return response()->json([
+    //                 'data' => $user,
+    //             ]);
+    //         }
+    //     } catch (\Throwable $th) {
+    //         if (request()->wantsJson()) {
+    //             return response()->json([
+    //                 'error'   => true,
+    //                 'message' => $th->getMessage()
+    //             ]);
+    //         }
+    //     }
+    // }
 
     public function destroy($id)
     {

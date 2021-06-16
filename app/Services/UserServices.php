@@ -2,6 +2,7 @@
 namespace app\Services;
 
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class UserServices
 {
@@ -45,6 +46,24 @@ class UserServices
         try {
             $user = $this->model::find($id);
             return $user;
+
+        } catch (\Illuminate\Database\QueryException $exception) {
+            throw $exception;
+        }
+    }
+
+    public function findByField($key, $value)
+    {
+        try {
+            //necessario validar se o id e um numero para evitar erros
+            $pattern = $key === 'id' ? $value : $value.'%';
+            $condition = $key == 'id' ? '=' : 'like';
+
+            $users = DB::table('users')
+                ->where($key, $condition, $pattern)
+                ->get();
+
+            return $users;
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;

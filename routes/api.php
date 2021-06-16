@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('users', UserController::class);
+Route::get('users', 'UserController@show');
+
