@@ -20,7 +20,6 @@ class UserController extends Controller
         try {
 
             $users = $this->services->all();
-
             if (request()->wantsJson()) {
 
                 return response()->json([
@@ -38,11 +37,10 @@ class UserController extends Controller
 
     }
 
-    public function show(Request $request)
+    public function showByField(Request $request)
     {
 
         try {
-
             if ($request->query()) {
                 [$key, $value] = Arr::divide($request->query());
 
@@ -119,27 +117,27 @@ class UserController extends Controller
         }
     }
 
-    // public function show(Request $request)
-    // {
-    //     try {
+    public function show($id)
+    {
+        try {
 
-    //         $user = $this->services->find($id);
+            $user = $this->services->find($id);
 
-    //         if (request()->wantsJson()) {
+            if (request()->wantsJson()) {
 
-    //             return response()->json([
-    //                 'data' => $user,
-    //             ]);
-    //         }
-    //     } catch (\Throwable $th) {
-    //         if (request()->wantsJson()) {
-    //             return response()->json([
-    //                 'error'   => true,
-    //                 'message' => $th->getMessage()
-    //             ]);
-    //         }
-    //     }
-    // }
+                return response()->json([
+                    'data' => $user,
+                ]);
+            }
+        } catch (\Throwable $th) {
+            if (request()->wantsJson()) {
+                return response()->json([
+                    'error'   => true,
+                    'message' => $th->getMessage()
+                ]);
+            }
+        }
+    }
 
     public function destroy($id)
     {

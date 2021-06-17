@@ -15,7 +15,12 @@ class UserServices
 
     public function all()
     {
-        return $this->model::all();
+
+        try {
+            return $this->model::all();
+        } catch (\Illuminate\Database\QueryException $exception) {
+            throw $exception;
+        }
     }
 
     public function create($user)
