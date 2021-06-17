@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UsersCreateRequest;
-use App\Http\Requests\UsersUpdateRequest;
-use App\Services\UserServices;
+use App\Services\AccountTypeServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
-class UserController extends Controller
+class AccountTypeController extends Controller
 {
     protected $services;
 
 
-    public function __construct(UserServices $services){
+    public function __construct(AccountTypeServices $services){
         $this->services = $services;
     }
 
@@ -22,11 +20,11 @@ class UserController extends Controller
     {
         try {
 
-            $users = $this->services->all();
+            $account_types = $this->services->all();
             if (request()->wantsJson()) {
 
                 return response()->json([
-                    'data' => $users,
+                    'data' => $account_types,
                 ]);
             }
         } catch (\Throwable $th) {
@@ -40,35 +38,7 @@ class UserController extends Controller
 
     }
 
-    public function showByField(Request $request)
-    {
-
-        try {
-            if ($request->query()) {
-                [$key, $value] = Arr::divide($request->query());
-
-
-                $users = $this->services->findByField(head($key),head($value));
-                if (request()->wantsJson()) {
-
-                    return response()->json([
-                        'data' => $users,
-                    ]);
-                }
-            }
-
-        } catch (\Throwable $th) {
-            if (request()->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $th->getMessage()
-                ]);
-            }
-        }
-    }
-
-
-    public function store(UsersCreateRequest $request)
+    public function store(Request $request)
     {
         try {
             $user = $this->services->create($request->all());
@@ -95,7 +65,7 @@ class UserController extends Controller
 
     }
 
-    public function update(UsersUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
             $user = $this->services->update($request->all(),$id);

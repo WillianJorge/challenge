@@ -18,3 +18,7 @@ Route::get('/', function () {
 });
 
 Route::resource('users', UserController::class);
+Route::resource('accountTypes', AccountTypeController::class);
+Route::resource('accounts', AccountController::class);
+
+

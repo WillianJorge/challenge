@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('users/search', 'UserController@showByField');
+Route::get('users/', 'UserController@showByField');
 Route::post('users/create', 'UserController@store');
 Route::get('users/all', 'UserController@index');
 Route::get('users/show/{id}', 'UserController@show');
