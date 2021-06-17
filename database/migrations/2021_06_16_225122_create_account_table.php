@@ -18,19 +18,14 @@ class CreateAccountTable extends Migration
             $table->string('agency');
             $table->string('number');
             $table->string('digit')->unique();
-            $table->string('company_name')->nullable();
-            $table->string('trading_name')->nullable();
-            $table->string('cnpj')->nullable();
-            $table->string('name')->nullable();
-            $table->string('cpf')->nullable();
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('account_type_id');
+            $table->unsignedInteger('company_id')->nullable();
+            $table->unsignedInteger('person_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('account_type_id')->references('id')->on('account_types');
-
-
+            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('person_id')->references('id')->on('persons');
         });
     }
 
