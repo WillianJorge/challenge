@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsersCreateRequest;
+use App\Http\Requests\UsersUpdateRequest;
 use App\Services\UserServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -65,7 +67,7 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(UsersCreateRequest $request)
     {
         try {
             $user = $this->services->create($request->all());
@@ -92,11 +94,10 @@ class UserController extends Controller
 
     }
 
-    public function update(Request $request, $id)
+    public function update(UsersUpdateRequest $request, $id)
     {
         try {
             $user = $this->services->update($request->all(),$id);
-
             $response = [
                 'message' => 'user updated.',
                 'data'    => $user->toArray(),
