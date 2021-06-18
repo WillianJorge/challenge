@@ -12,8 +12,13 @@ class Companies extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'trading',
+        'company_name',
+        'trading_name',
         'cnpj',
     ];
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class, 'company_id');
+    }
 }

@@ -20,4 +20,14 @@ class Account extends Model
         'person_id'
     ];
 
+    public function persons()
+    {
+        return $this->hasOne(Person::class, 'id','person_id');
+    }
+
+    public function companies()
+    {
+        return $this->hasOne(Companies::class, 'id','company_id');
+    }
+
 }

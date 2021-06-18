@@ -6,6 +6,7 @@ use App\Http\Requests\AccountsCreateRequest;
 use App\Http\Requests\AccountsUpdateRequest;
 use App\Services\AccountServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class AccountController extends Controller
 {
@@ -40,12 +41,13 @@ class AccountController extends Controller
 
     public function store(AccountsCreateRequest $request)
     {
+
         try {
             $account = $this->services->create($request->all());
 
             $response = [
-                'message' => 'account created.',
-                'data'    => $account->toArray(),
+                'message' => Arr::get($account,'success') ? 'account created.' : 'erro',
+                'data'    => Arr::has($account,'data') ? Arr::get($account,'data') : Arr::get($account,'errors'),
             ];
 
             if ($request->wantsJson()) {

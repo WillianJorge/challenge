@@ -23,4 +23,9 @@ class Person extends Model
         'name',
         'cpf',
     ];
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class, 'person_id', 'id');
+    }
 }
