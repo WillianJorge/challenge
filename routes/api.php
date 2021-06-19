@@ -14,10 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('users/', 'UserController@showByField');
+Route::get('users/', 'UserController@search');
+
 Route::post('users/create', 'UserController@store');
+
 Route::get('users/all', 'UserController@index');
+
 Route::get('users/show/{id}', 'UserController@show');
+
+Route::post('accounts', 'AccountController@store');
+
+Route::get('accounts', 'AccountController@index');
+
+
+
 
 
 

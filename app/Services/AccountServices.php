@@ -22,8 +22,7 @@ class AccountServices
     {
 
         try {
-            // dd($this->model::with(['persons','companies'])->get());
-            return $this->model::all();
+            return $this->model::with(['persons','companies'])->get();
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
