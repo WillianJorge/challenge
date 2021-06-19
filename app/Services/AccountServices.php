@@ -78,9 +78,9 @@ class AccountServices
     public function update($data, $id)
     {
         try {
-            $user = $this->model::find($id);
-            $user->update($data);
-            return $user;
+            $account = $this->model::find($id);
+            $account->update($data);
+            return $account;
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
@@ -91,8 +91,8 @@ class AccountServices
     public function find($id)
     {
         try {
-            $user = $this->model::find($id);
-            return $user;
+            $account = $this->model::find($id);
+            return $account;
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
@@ -102,11 +102,11 @@ class AccountServices
     public function delete($id)
     {
         try {
-            $user = $this->model::find($id);
+            $account = $this->model::find($id);
 
-            $result = (!empty($user)) ? $user->delete() : false;
+            $result = (!empty($account)) ? $account->delete() : false;
 
-            return $result ? 'user deleted' : 'user not found';
+            return $result ? 'account deleted' : 'account not found';
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;

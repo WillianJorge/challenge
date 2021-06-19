@@ -14,17 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('users/', 'UserController@search');
+Route::prefix('users')->group(function () {
+    Route::get('/', 'UserController@search');
+    Route::post('/create', 'UserController@store');
+    Route::get('/all', 'UserController@index');
+    Route::get('/show/{id}', 'UserController@show');
+});
 
-Route::post('users/create', 'UserController@store');
 
-Route::get('users/all', 'UserController@index');
+Route::prefix('accounts')->group(function () {
+    Route::post('/', 'AccountController@store');
+    Route::get('/', 'AccountController@index');
+});
 
-Route::get('users/show/{id}', 'UserController@show');
 
-Route::post('accounts', 'AccountController@store');
-
-Route::get('accounts', 'AccountController@index');
 
 
 

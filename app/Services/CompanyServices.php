@@ -23,10 +23,10 @@ class CompanyServices
         }
     }
 
-    public function create($user)
+    public function create($company)
     {
         try {
-            return $this->model::create($user);
+            return $this->model::create($company);
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
         }
@@ -36,9 +36,9 @@ class CompanyServices
     public function update($data, $id)
     {
         try {
-            $user = $this->model::find($id);
-            $user->update($data);
-            return $user;
+            $company = $this->model::find($id);
+            $company->update($data);
+            return $company;
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
@@ -49,8 +49,8 @@ class CompanyServices
     public function find($id)
     {
         try {
-            $user = $this->model::find($id);
-            return $user;
+            $company = $this->model::find($id);
+            return $company;
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
@@ -60,11 +60,11 @@ class CompanyServices
     public function delete($id)
     {
         try {
-            $user = $this->model::find($id);
+            $company = $this->model::find($id);
 
-            $result = (!empty($user)) ? $user->delete() : false;
+            $result = (!empty($company)) ? $company->delete() : false;
 
-            return $result ? 'user deleted' : 'user not found';
+            return $result ? 'company deleted' : 'company not found';
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;

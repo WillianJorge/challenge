@@ -23,10 +23,10 @@ class PersonServices
         }
     }
 
-    public function create($user)
+    public function create($person)
     {
         try {
-            return $this->model::create($user);
+            return $this->model::create($person);
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
         }
@@ -36,9 +36,9 @@ class PersonServices
     public function update($data, $id)
     {
         try {
-            $user = $this->model::find($id);
-            $user->update($data);
-            return $user;
+            $person = $this->model::find($id);
+            $person->update($data);
+            return $person;
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
@@ -49,8 +49,8 @@ class PersonServices
     public function find($id)
     {
         try {
-            $user = $this->model::find($id);
-            return $user;
+            $person = $this->model::find($id);
+            return $person;
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
@@ -60,11 +60,11 @@ class PersonServices
     public function delete($id)
     {
         try {
-            $user = $this->model::find($id);
+            $person = $this->model::find($id);
 
-            $result = (!empty($user)) ? $user->delete() : false;
+            $result = (!empty($person)) ? $person->delete() : false;
 
-            return $result ? 'user deleted' : 'user not found';
+            return $result ? 'person deleted' : 'person not found';
 
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;

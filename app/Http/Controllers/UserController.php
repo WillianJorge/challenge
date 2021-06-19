@@ -7,7 +7,6 @@ use App\Http\Requests\UsersUpdateRequest;
 use App\Services\UserServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
