@@ -41,7 +41,6 @@ class AccountController extends Controller
 
     public function store(AccountsCreateRequest $request)
     {
-
         try {
             $account = $this->services->create($request->all());
 

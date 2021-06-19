@@ -27,7 +27,7 @@ class AccountsCreateRequest extends FormRequest
             'agency' => 'required|numeric|unique:accounts|digits:4',
             'number' => 'required|numeric|unique:accounts|digits:6',
             'digit' => 'required|numeric|digits:1',
-            'user_id' => 'required|numeric',
+            // 'user_id' => 'required|numeric',
 
         ];
     }

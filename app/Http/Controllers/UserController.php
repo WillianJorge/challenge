@@ -7,11 +7,11 @@ use App\Http\Requests\UsersUpdateRequest;
 use App\Services\UserServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     protected $services;
-
 
     public function __construct(UserServices $services){
         $this->services = $services;
@@ -66,20 +66,22 @@ class UserController extends Controller
         }
     }
 
-
     public function store(UsersCreateRequest $request)
     {
         try {
             $user = $this->services->create($request->all());
 
+            $token = $user->createToken('myToken')->plainTextToken;
+
             $response = [
                 'message' => 'user created.',
                 'data'    => $user->toArray(),
+                'token'   => $token
             ];
 
             if ($request->wantsJson()) {
 
-                return response()->json($response);
+                return response()->json($response,201);
             }
         } catch (\Throwable $th) {
             if ($request->wantsJson()) {
@@ -164,5 +166,45 @@ class UserController extends Controller
                 ]);
             }
         }
+    }
+
+    public function login(Request $request)
+    {
+        $fields = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $user = $this->services->checkEmail($fields);
+
+        if (!$user || !Hash::check(Arr::get($fields, 'password'), $user->password)) {
+            return response([
+                'message' => 'the credentials dont match'
+            ], 401);
+        }
+
+        $token = $user->createToken('myToken')->plainTextToken;
+
+        $response = [
+            'message' => 'user logged.',
+            'data'    => $user->toArray(),
+            'token'   => $token
+        ];
+
+        if ($request->wantsJson()) {
+
+            return response()->json($response,201);
+        }
+
+
+    }
+    public function logout(Request $request)
+    {
+        auth()->user()->tokens()->delete();
+
+        return [
+            'message' => 'user logout'
+        ];
+
     }
 }

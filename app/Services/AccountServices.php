@@ -33,6 +33,10 @@ class AccountServices
     {
         try {
 
+            $user_id = auth()->user()->id;
+            $account = Arr::has($account,'user_id') ? Arr::set($account,'user_id',$user_id) : Arr::add($account,'user_id',$user_id);
+
+
             $company = new Companies;
             $new_company = Arr::only($account,['company_name', 'trading_name', 'cnpj']);
 

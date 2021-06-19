@@ -2,6 +2,7 @@
 namespace app\Services;
 
 use App\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class UserServices
@@ -87,6 +88,11 @@ class UserServices
         } catch (\Illuminate\Database\QueryException $exception) {
             throw $exception;
         }
+    }
+
+    public function checkEmail($user)
+    {
+        return $this->model::where('email', Arr::get($user,'email'))->first();
     }
 
 }
